@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="renderer" content="webkit"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0,user-scalable=no,target-densitydpi=medium-dpi"/>
+<title>无标题文档</title>
+<link rel="stylesheet" href="../../../dist/gui.css">
+</head>
+<style>
+	.dialog{
+		margin: 20px;
+	}
+</style>
+<body id="dialog">
+<button class="dialog btn btn-default" data-key = "dialogDefault">dialog</button>
+<button class="dialog btn btn-default" data-key = "dialogTitle">dialog title</button>
+<button class="dialog btn btn-default" data-key = "dialogSureCancelText">dialogSureCancelText</button>
+<button class="dialog btn btn-default" data-key = "dialogCloseBtnText">dialogCloseBtnText</button>
+<button class="dialog btn btn-default" data-key = "dialogSureBefore">dialogSureBeforeCallback</button>
+<button class="dialog btn btn-default" data-key = "dialogSureAfter">dialogSureAfter</button>
+<button class="dialog btn btn-default" data-key = "dialogCancel">dialogCancelCallback</button>
+<button class="dialog btn btn-default" data-key = "dialogClose">dialogCloseCallback</button>
+<button class="dialog btn btn-default" data-key = "dialogHasHeader">dialogHasHeader</button>
+<button class="dialog btn btn-default" data-key = "dialogHasFooter">dialogHasFooter</button>
+<button class="dialog btn btn-default" data-key = "dialogHasSure">dialogHasSure</button>
+<button class="dialog btn btn-default" data-key = "dialogHasCancel">dialogHasCancel</button>
+<button class="dialog btn btn-default" data-key = "dialogHasClose">dialogHasClose</button>
+<button class="dialog btn btn-default" data-key = "dialogDelay">dialogDelay</button>
+<button class="dialog btn btn-default" data-key = "dialogModal">dialogModal</button>
+<button class="dialog btn btn-default" data-key = "dialogDisabledSure">dialogDisabledSure</button>
+<button class="dialog btn btn-default" data-key = "dialogDisabledCancel">dialogDisabledCancel</button>
+<button class="dialog btn btn-default" data-key = "dialogHasModal">dialogHasModal</button>
+<button class="dialog btn btn-default" data-key = "dialogCloseOnClickModal">dialogCloseOnClickModal</button>
+<button class="dialog btn btn-default" data-key = "closeOnPressEscape">closeOnPressEscape</button>
+
+<button class="dialog btn btn-default" data-key = "gAlertSuccess">g-alert for success message</button>
+<button class="dialog btn btn-default" data-key = "gAlertInfo">g-alert for info message</button>
+<button class="dialog btn btn-default" data-key = "gAlertError">g-alert for error message</button>
+<button class="dialog btn btn-default" data-key = "gAlertWarning">g-alert for warning message</button>
+
+<button class="dialog btn btn-default" data-key = "gLoading">gLoading</button>
+<button class="dialog btn btn-default" data-key = "gLoadingInDiv">gLoadingInDiv</button>
+<button class="dialog btn btn-default" data-key = "gDialogInDiv">gDialogInDiv</button>
+<button class="dialog btn btn-default" data-key = "gCloseLoading" style="position: relative; z-index: 99">
+	closeLoading
+</button>
+
+
+
+
+<div class="testcontainer" style="margin-top: 50px;">
+	<div id="loadingBox" style="border:1px solid #ccc; width:200px; height:200px; margin-left: 150px; overflow: hidden;position:relative;float:left;"></div>
+	<div id="alertBox" style="border: 1px solid #ccc; width:300px; height:300px; margin-left:100px; overflow: hidden;position:relative;float:left;"></div>
+	<div id="alertBox-2" style="border: 1px solid #ccc; width:300px; height:350px; margin-left:100px; background-color: #ccc; overflow: hidden;position:relative;float:left;"></div>
+</div>
+	
+<script src="../../../dist/common.js"></script>
+<script src="../../../dist/gui.js"></script>
+<script>
+	var options;
+	var loading;
+	var fns = {
+		dialogDefault: function(){
+			var dialog = new gDialog();
+			dialog.show();
+		},
+		dialogTitle: function(){
+			options = {
+				title: 'this is have title dialog'
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogSureBefore: function(){
+			options = {
+				height: '',
+				contentHeight: 150,
+				content: '这是一个测试弹层确认按钮回调的例子,在弹层消失前回调，如果return false，则取消弹层close',
+				sureBeforeCallBack: function(){
+					alert('sureBeforeCallBack')
+					return false
+				}
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogSureAfter: function(){
+			options = {
+				height: '',
+				contentHeight: 150,
+				content: '这是一个测试弹层确认按钮回调的例子,在弹层消失后回调',
+				sureAfterCallBack: function(){
+					alert('sureAfterCallBack')
+
+				}
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogCancel: function(){
+			options = {
+				content: '这是一个测试弹层取消按钮回调的例子',
+				cancelCallBack: function(){
+					alert('cancelCallBack')
+				}
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogClose: function(){
+			options = {
+				content: '这是一个测试弹层关闭按钮(右上角 X )回调的例子',
+				closeCallBack: function(){
+					alert('closeCallBack');
+				}
+			};
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogHasHeader: function(){
+			options = {
+				height: '',
+				content: '一个没有头部的弹层',
+				hasHeader: false
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogHasFooter: function(){
+			options = {
+				height: '',
+				content: '一个没有Footer的弹层',
+				hasFooter: false
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogHasSure: function(){
+			options = {
+				content: '没有了确认按钮的弹层',
+				hasSure: false
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogHasCancel: function(){
+			options = {
+				content: '没有了取消按钮的弹层',
+				hasCancel: false
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogHasClose: function(){
+			options = {
+				content: '没有了关闭按钮的弹层',
+				hasClose: false
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogDelay: function(){
+			options = {
+				height:'',
+				content: '延时取消的弹层，延时2秒（2000毫秒）',
+				delay: true,
+				seconds: 2000,
+				hasHeader: false,
+				hasFooter: false
+			}
+			var dialog = new gDialog(options);
+			dialog.show()
+		},
+		dialogModal: function(){
+			options = {
+				content: '蒙层回调方法',
+				modalClose: true,
+				modalCallBack: function(){
+					alert('modalCallBack')
+				}
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogDisabledSure: function(){
+
+			options = {
+				content: 'disabledSure is true',
+				disabledSure: true
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogDisabledCancel: function(){
+			options = {
+				content: 'disabledCancel is true',
+				disabledCancel: true
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogHasModal: function(){
+			options = {
+				element: '#alertBox-2',
+				content: '一个没有蒙层效果的弹层',
+				hasModal: false
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogCloseOnClickModal: function(){
+			options = {
+				content: '点击蒙层关闭',
+				closeOnClickModal: true
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogSureCancelText: function(){
+			options = {
+				sureButtonText: '下一步',
+				cancelButtonText: '终止'
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		dialogCloseBtnText: function(){
+			options = {
+				closeButtonText: '知道了'
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		gDialogInDiv: function(){
+			options = {
+				element: '#alertBox',
+				content: '元素内部弹层效果'
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		closeOnPressEscape: function(){
+			options = {
+				closeOnPressEscape: true
+			}
+			var dialog = new gDialog(options);
+			dialog.show();
+		},
+		gAlertSuccess: function(){
+			options = {
+				closable: true,
+				title: '成功消息',
+				description: '这里是一条成功消息',
+				closeText: '',
+				type: 'success',
+				showIcon: true,
+				delay: true,
+				seconds: 2000,
+			}
+			var alert = new gAlert(options);
+		},
+		gAlertInfo: function(){
+			options = {
+				closable: true,
+				title: '系统 消息',
+				description: '这是一条系统 消息',
+				closeText: '',
+				type: 'info',
+				showIcon: true
+			}
+			var alert = new gAlert(options);
+		},
+		gAlertError: function(){
+			options = {
+				title: '错误消息',
+				description: '',
+				type: 'error',
+				showIcon: true
+			}
+			var alert = new gAlert(options);
+		},
+		gAlertWarning: function(){
+			options = {
+				title: '警告消息',
+				description: '',
+				type: 'warning',
+				showIcon: false
+			}
+			var alert = new gAlert(options);
+		},
+		gLoading: function(){
+			loading = new gLoading();
+			loading.show();
+		},
+		gCloseLoading: function(){
+			loading.close();
+		},
+		gLoadingInDiv: function(){
+			loading = new gLoading({
+				target: '#loadingBox'
+			});
+			loading.show();
+		}
+	}
+	$('.dialog').on('click', function(){
+		var key = $(this).data('key');
+		fns[key]();
+	})
+
+</script>
+</body>
+</html>
